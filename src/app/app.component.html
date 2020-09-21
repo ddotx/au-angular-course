@@ -1,11 +1,32 @@
+
+
 <div class="top-menu">
 
-    <img class="logo"
-         src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+    <img class="logo" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
 
 </div>
 
+<div class="demo">
+    Start Date : {{startDate | date: 'MMM/dd/yyyy'}}
+    {{course | json}}
+</div>
 
+<div class="courses">
+    <course-card *ngFor="let course of courses; 
+    index as i; 
+    first as isFirst; 
+    last as isLast;
+    even as isEven;
+    odd as isOdd"
+    [class.is-first]="isFirst"
+    [class.is-even]="isEven"
+    [class.is-odd]="isOdd"
+    [class.is-last]="isLast"
+    (courseSelected)="onCourseSelected($event)"
+    [course]="course"
+    [cardIndex]="i + 1"
+    ></course-card>
+</div>
 
 <div class="courses" *ngIf="courses[0] as course">
 
@@ -17,9 +38,7 @@
 
     </ng-template>
 
-    <course-card
-            (courseSelected)="onCourseSelected($event)"
-                 [course]="course" [noImageTpl]="blankImage">
+    <course-card (courseSelected)="onCourseSelected($event)" [course]="course" [noImageTpl]="blankImage">
 
         <course-image [src]="course.iconUrl"></course-image>
 
@@ -29,7 +48,8 @@
 
     </course-card>
 
-
 </div>
 
-
+<div *ngFor="let pair of course | keyvalue">
+    {{pair.key + ': ' + pair.value}}
+</div>
